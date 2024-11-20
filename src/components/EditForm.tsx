@@ -595,7 +595,6 @@ export function EditForm(props: EditFormProps) {
                       <select
                         id={editEntry.attribute}
                         name={editEntry.attribute}
-                        type="text"
                         autoComplete={editEntry.attribute}
                         defaultValue={
                           entity && entity[editEntry.attribute]
@@ -1753,7 +1752,7 @@ export function EditForm(props: EditFormProps) {
                         }
                         entityId={entity && entity.id ? entity.id : null}
                         supportedFileTypes={".jpg,.png"}
-                        uponFileChange={(files) => {
+                        uponFileChange={(files: StoredFile[]) => {
                           if (entity && entity[editEntry.attribute]) {
                             entity[editEntry.attribute]["image_urls"] = files;
                           }
