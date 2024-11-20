@@ -48,13 +48,13 @@ export const ValidationType = {
   Price: "Price",
 } as const;
 
-export type ValidationType =
-  (typeof ValidationType)[keyof typeof ValidationType];
+type ValidationTypeKeys = keyof typeof ValidationType;
+type ValidationTypeValues = (typeof ValidationType)[ValidationTypeKeys];
 
 function validateValue(
   value: unknown,
   attributeName: string,
-  validationType: ValidationType
+  validationType: ValidationTypeValues
 ) {
   switch (validationType) {
     case ValidationType.Email:
@@ -218,7 +218,7 @@ type EditEntry = {
   attributeName: string;
   type: keyof typeof EditEntryType;
   isRequired: boolean;
-  validations?: Array<keyof typeof ValidationType>;
+  validations?: ValidationTypeKeys[];
   extraParam?: {
     isInstagramShowcase?: boolean;
     maxPhotos?: number;
