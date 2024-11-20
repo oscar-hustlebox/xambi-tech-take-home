@@ -15,7 +15,7 @@ type EntityType = {
   [key: string]: any;
 };
 
-type EditEntry = {
+export type EditEntry = {
   attribute: string;
   attributeName: string;
   type: keyof typeof EditEntryType;

@@ -1,11 +1,21 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
+import { EditForm } from "./components/EditForm";
+import { defaultEditEntries } from "./data/formConfig";
 
 function Home() {
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold text-blue-600">Home Page</h1>
+      <EditForm
+        title="Edit Form"
+        description="Edit Form Description"
+        editEntries={defaultEditEntries}
+        entityObj={{
+          name: "Test",
+        }}
+        onSubmitSuccess={() => {}}
+      />
     </div>
   );
 }
@@ -14,16 +24,6 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-gray-100">
-        <nav className="bg-white shadow-lg p-4">
-          <ul className="flex space-x-4">
-            <li>
-              <Link to="/" className="text-blue-500 hover:text-blue-700">
-                Home
-              </Link>
-            </li>
-          </ul>
-        </nav>
-
         <Routes>
           <Route path="/" element={<Home />} />
         </Routes>
