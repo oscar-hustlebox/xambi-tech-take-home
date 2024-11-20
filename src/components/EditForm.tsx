@@ -346,12 +346,11 @@ export function EditForm(props: EditFormProps) {
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative lg:pt-5 text-left">
       <form
         className="space-y-8 divide-y divide-gray-200"
-        onSubmit={(event) => {
+        onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
           event.preventDefault();
-          // if (!entity || !entity["id"]) {
-          //   toast.error("Unknown error.");
-          //   return;
-          // }
+          const form = event.currentTarget;
+          const formElements = Array.from(form.elements) as HTMLFormElement[];
+
           const updateTargets = new Set(
             props.editEntries.map((editEntry) => editEntry.attribute)
           );
@@ -362,8 +361,9 @@ export function EditForm(props: EditFormProps) {
             ])
           );
 
-          for (const target of event.target) {
-            if (!target.name) continue;
+          for (const target of formElements) {
+            if (!("name" in target) || !target.name) continue;
+
             if (updateTargets.has(target.name)) {
               // if target is radio button, only update if it is checked
               if (target.type === "radio" && !target.checked) continue;
@@ -379,10 +379,14 @@ export function EditForm(props: EditFormProps) {
                 .join("_");
 
               if (entity_sub_field.includes("listfieldidx_")) {
-                const entity_curr_idx = entity_sub_field.split("_")[1];
+                const entity_curr_idx = parseInt(
+                  entity_sub_field.split("_")[1],
+                  10
+                );
                 const entity_sub_sub_field = entity_sub_field
                   .split("_")
-                  .slice(2);
+                  .slice(2)
+                  .join("_");
                 const max_idx_to_take =
                   listFieldSize[editEntryIdx[entity_field]];
                 if (entity_curr_idx >= max_idx_to_take) continue;
@@ -392,7 +396,10 @@ export function EditForm(props: EditFormProps) {
                 entity[entity_field][entity_curr_idx][entity_sub_sub_field] =
                   target.value;
               } else if (entity_sub_field.includes("listfieldsingleidx_")) {
-                const entity_curr_idx = entity_sub_field.split("_")[1];
+                const entity_curr_idx = parseInt(
+                  entity_sub_field.split("_")[1],
+                  10
+                );
                 const max_idx_to_take =
                   listFieldSize[editEntryIdx[entity_field]];
                 if (entity_curr_idx >= max_idx_to_take) continue;
@@ -1147,7 +1154,9 @@ export function EditForm(props: EditFormProps) {
                                       accept={".jpg,.png"}
                                       onClick={(event) => {
                                         console.log(event.target);
-                                        event.target.value = null;
+                                        (
+                                          event.target as HTMLInputElement
+                                        ).value = "";
                                       }}
                                       onChange={(event) => {
                                         if (
