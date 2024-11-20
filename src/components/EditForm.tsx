@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
-import { useNavigate, useHistory } from "react-router-dom";
-import { useLoadingSpinner } from "components/LoadingSpinner";
+import { useNavigate } from "react-router-dom";
 import { FileUpload } from "components/FileUpload";
 import { uploadFile } from "services/firebase";
 import { StoredFile, StoredFileState } from "data/common";
+import { useLoadingSpinner } from "./LoadingSpinner";
 
 export const EditEntryType = {
   Text: "Text",
