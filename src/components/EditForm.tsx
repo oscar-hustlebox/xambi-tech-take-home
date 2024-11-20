@@ -9,6 +9,11 @@ type UploadPhotoMap = {
   [key: string]: string;
 };
 
+type EntityType = {
+  id?: string;
+  [key: string]: any;
+};
+
 export const EditEntryType = {
   Text: "Text",
   TextList: "TextList",
@@ -41,11 +46,14 @@ export const ValidationType = {
   TextLengthBelow400: "TextLengthBelow400",
   Number: "Number",
   Price: "Price",
-};
+} as const;
+
+export type ValidationType =
+  (typeof ValidationType)[keyof typeof ValidationType];
 
 function validateValue(
   value: unknown,
-  attributeName: String,
+  attributeName: string,
   validationType: ValidationType
 ) {
   switch (validationType) {
@@ -205,22 +213,27 @@ function validateValue(
   return true;
 }
 
-export class EditEntry {
-  attribute: String;
-  attributeName: String;
-  type: EditEntryType;
-  isRequired: Boolean;
-  validations: [ValidationType];
-  extraParam: unknown;
-}
+type EditEntry = {
+  attribute: string;
+  attributeName: string;
+  type: keyof typeof EditEntryType;
+  isRequired: boolean;
+  validations?: Array<keyof typeof ValidationType>;
+  extraParam?: {
+    isInstagramShowcase?: boolean;
+    maxPhotos?: number;
+  };
+  options?: string[]; // Used for Radio type
+};
 
-export class EditFormProps {
-  title: String;
-  description: String;
-  editEntries: [EditEntry];
-  entityObj: unknown;
-  onSubmitSuccess: Function;
-}
+type EditFormProps = {
+  title: string;
+  description: string;
+  editEntries: EditEntry[];
+  entityObj: EntityType;
+  onSubmitSuccess: (entity: EntityType) => void;
+  buttonText?: string;
+};
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -230,8 +243,10 @@ export function EditForm(props: EditFormProps) {
   const navigate = useNavigate();
   const [loader, showLoader, hideLoader] = useLoadingSpinner();
 
-  const [entity, setEntity] = useState(props.entityObj);
-  const [characterCounts, setCharacterCounts] = useState({});
+  const [entity, setEntity] = useState<EntityType>(props.entityObj);
+  const [characterCounts, setCharacterCounts] = useState<
+    Record<string, number>
+  >({});
 
   const [uploadPhotoMap, setUploadPhotoMap] = useState<UploadPhotoMap>({});
 
@@ -253,7 +268,7 @@ export function EditForm(props: EditFormProps) {
     setEntity(props.entityObj);
   }, [props.entityObj]);
 
-  const shadowFileInput = useRef([]);
+  const shadowFileInput = useRef<(HTMLInputElement | null)[]>([]);
   useEffect(() => {
     shadowFileInput.current = shadowFileInput.current.slice(
       0,
@@ -261,7 +276,7 @@ export function EditForm(props: EditFormProps) {
     );
   }, [props.editEntries]);
 
-  const [listFieldSize, setListFieldSize] = useState([]);
+  const [listFieldSize, setListFieldSize] = useState<number[]>([]);
   useEffect(() => {
     const currListFieldSize = props.editEntries.map((entry) => {
       const isArrField =
@@ -277,7 +292,7 @@ export function EditForm(props: EditFormProps) {
     setListFieldSize(currListFieldSize);
   }, [props.editEntries]);
 
-  const [radioFieldValue, setRadioFieldValue] = useState([]);
+  const [radioFieldValue, setRadioFieldValue] = useState<string[]>([]);
   useEffect(() => {
     const currRadioFieldValue = props.editEntries.map((entry) => {
       const isRadioField =
