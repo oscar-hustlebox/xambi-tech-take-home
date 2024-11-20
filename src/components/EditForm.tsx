@@ -5,6 +5,10 @@ import { uploadFile } from "../services/firebase";
 import { StoredFile, StoredFileState } from "../data/common";
 import { useLoadingSpinner } from "./LoadingSpinner";
 
+type UploadPhotoMap = {
+  [key: string]: string;
+};
+
 export const EditEntryType = {
   Text: "Text",
   TextList: "TextList",
@@ -229,16 +233,16 @@ export function EditForm(props: EditFormProps) {
   const [entity, setEntity] = useState(props.entityObj);
   const [characterCounts, setCharacterCounts] = useState({});
 
-  const [uploadPhotoMap, setUploadPhotoMap] = useState({});
+  const [uploadPhotoMap, setUploadPhotoMap] = useState<UploadPhotoMap>({});
 
-  const uploadFileToFirestore = (fieldName, fileToUpload) => {
+  const uploadFileToFirestore = (fieldName: string, fileToUpload: File) => {
     uploadFile(
-      props.entityObj ? props.entityObj.id : "",
+      props.entityObj?.id ?? "",
       fieldName,
       fileToUpload,
       (pc) => null,
       (file: StoredFile) => {
-        const uploadPhotoMapCp = { ...uploadPhotoMap };
+        const uploadPhotoMapCp: UploadPhotoMap = { ...uploadPhotoMap };
         uploadPhotoMapCp[fieldName] = file.file_path;
         setUploadPhotoMap(uploadPhotoMapCp);
       }
