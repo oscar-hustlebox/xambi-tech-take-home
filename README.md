@@ -1,6 +1,50 @@
-# Getting Started with Create React App
+# Dynamic Form Builder with React and TypeScript
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A flexible and reusable form builder component built with React, TypeScript, and Tailwind CSS. This project provides a robust solution for creating dynamic forms with various input types and validation rules.
+
+## Features
+
+### Form Components
+- Basic Inputs (Text, TextArea, Date)
+- Selection Controls (Radio, Checkbox, Select)
+- File Uploads (Photo, ProfilePhoto, FilePhoto)
+- Complex Fields
+  - Address Form
+  - Article Editor
+  - Showcase Gallery
+  - PillList (Tag Input)
+  - TextList
+  - DoubleTextList
+
+### Validation & Error Handling
+- Built-in validation types
+  - Email format
+  - Phone numbers
+  - Required fields
+  - Text length limits
+  - Numeric ranges
+  - Price format
+- Custom validation messages
+- Real-time character counting
+- File size validation
+
+### File Management
+- Multiple file upload support
+- Image preview capabilities
+- File type restrictions
+- Size limit enforcement (10MB)
+
+### UI Features
+- Responsive layout
+- Loading states
+- Toast notifications
+- Form navigation
+- Cancel/Save actions
+- Tailwind CSS styling
+
+## Getting Started
+
+1. Clone the repository
 
 ## Available Scripts
 
