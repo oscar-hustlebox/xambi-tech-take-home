@@ -543,7 +543,7 @@ export function EditForm(props: EditFormProps) {
                 if (editEntry.condition != null) {
                   if (!editEntry.condition) return;
                 }
-                if (!editEntry.type || editEntry.type == EditEntryType.Text) {
+                if (!editEntry.type || editEntry.type === EditEntryType.Text) {
                   return (
                     <div className="col-span-6 sm:col-span-3">
                       <label
@@ -578,7 +578,7 @@ export function EditForm(props: EditFormProps) {
                       )}
                     </div>
                   );
-                } else if (editEntry.type == EditEntryType.Select) {
+                } else if (editEntry.type === EditEntryType.Select) {
                   <div className="col-span-6 sm:col-span-3">
                     <label
                       htmlFor={editEntry.attribute}
@@ -608,7 +608,7 @@ export function EditForm(props: EditFormProps) {
                       <option>Mexico</option>
                     </div>
                   </div>;
-                } else if (editEntry.type == EditEntryType.Date) {
+                } else if (editEntry.type === EditEntryType.Date) {
                   return (
                     <div className="col-span-6 sm:col-span-3">
                       <label
@@ -715,7 +715,7 @@ export function EditForm(props: EditFormProps) {
                       </div>
                     </div>
                   );
-                } else if (editEntry.type == EditEntryType.DoubleTextList) {
+                } else if (editEntry.type === EditEntryType.DoubleTextList) {
                   return (
                     <div className="col-span-6">
                       <div className="relative py-5">
@@ -838,7 +838,7 @@ export function EditForm(props: EditFormProps) {
                       </div>
                     </div>
                   );
-                } else if (editEntry.type == EditEntryType.Checkbox) {
+                } else if (editEntry.type === EditEntryType.Checkbox) {
                   return (
                     <div className="col-span-6 relative flex items-start">
                       <div className="flex h-5 items-center">
@@ -863,7 +863,7 @@ export function EditForm(props: EditFormProps) {
                       </div>
                     </div>
                   );
-                } else if (editEntry.type == EditEntryType.Radio) {
+                } else if (editEntry.type === EditEntryType.Radio) {
                   return (
                     <div className="col-span-6">
                       <label
@@ -907,7 +907,7 @@ export function EditForm(props: EditFormProps) {
                       </fieldset>
                     </div>
                   );
-                } else if (editEntry.type == EditEntryType.TextArea) {
+                } else if (editEntry.type === EditEntryType.TextArea) {
                   return (
                     <div className="col-span-6">
                       <label
@@ -961,7 +961,7 @@ export function EditForm(props: EditFormProps) {
                       </div>
                     </div>
                   );
-                } else if (editEntry.type == EditEntryType.File) {
+                } else if (editEntry.type === EditEntryType.File) {
                   return (
                     <FileUpload
                       fieldDisplayName={editEntry.attributeName}
@@ -979,7 +979,7 @@ export function EditForm(props: EditFormProps) {
                       isMultiple={true}
                     />
                   );
-                } else if (editEntry.type == EditEntryType.FilePhoto) {
+                } else if (editEntry.type === EditEntryType.FilePhoto) {
                   return (
                     <FileUpload
                       fieldDisplayName={editEntry.attributeName}
@@ -998,7 +998,7 @@ export function EditForm(props: EditFormProps) {
                       isMultiple={true}
                     />
                   );
-                } else if (editEntry.type == EditEntryType.ProfilePhoto) {
+                } else if (editEntry.type === EditEntryType.ProfilePhoto) {
                   return (
                     <div className="col-span-6 py-3">
                       <label
@@ -1058,7 +1058,7 @@ export function EditForm(props: EditFormProps) {
                       </div>
                     </div>
                   );
-                } else if (editEntry.type == EditEntryType.Photo) {
+                } else if (editEntry.type === EditEntryType.Photo) {
                   return (
                     <div className="col-span-6 py-3">
                       <label
@@ -1196,7 +1196,7 @@ export function EditForm(props: EditFormProps) {
                       )}
                     </div>
                   );
-                } else if (editEntry.type == EditEntryType.Article) {
+                } else if (editEntry.type === EditEntryType.Article) {
                   return (
                     <div className="col-span-6">
                       <div className="relative py-5">
@@ -1403,7 +1403,7 @@ export function EditForm(props: EditFormProps) {
                       </div>
                     </div>
                   );
-                } else if (editEntry.type == EditEntryType.Address) {
+                } else if (editEntry.type === EditEntryType.Address) {
                   return (
                     <div className="col-span-6">
                       <div className="relative my-5">
