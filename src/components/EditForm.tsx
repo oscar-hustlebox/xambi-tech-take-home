@@ -228,6 +228,8 @@ type EditEntry = {
   subTitle?: string;
   info?: string;
   condition?: boolean;
+  button?: React.ReactNode;
+  characterCount?: number;
 };
 
 type EditFormProps = {
@@ -1040,7 +1042,7 @@ export function EditForm(props: EditFormProps) {
                           <button
                             type="button"
                             onClick={() =>
-                              shadowFileInput.current[index].click()
+                              shadowFileInput.current[index]?.click()
                             }
                             className="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                           >
@@ -1113,7 +1115,7 @@ export function EditForm(props: EditFormProps) {
                                       className="sr-only"
                                       accept={".jpg,.png"}
                                       onClick={(event) => {
-                                        console.log();
+                                        console.log(event.target);
                                         event.target.value = null;
                                       }}
                                       onChange={(event) => {
@@ -1143,7 +1145,7 @@ export function EditForm(props: EditFormProps) {
                                   <p className="pl-1"> to upload</p>
                                 </div>
                                 <p className="text-xs text-gray-500">
-                                  {".jpg, .png" + " up to 10MB"}
+                                  JPG or PNG up to 10MB
                                 </p>
                               </div>
                             </div>
@@ -1171,7 +1173,7 @@ export function EditForm(props: EditFormProps) {
                               <button
                                 type="button"
                                 onClick={() =>
-                                  shadowFileInput.current[index].click()
+                                  shadowFileInput.current[index]?.click()
                                 }
                                 className="rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                               >
@@ -1393,7 +1395,7 @@ export function EditForm(props: EditFormProps) {
                           <button
                             type="button"
                             onClick={() =>
-                              shadowFileInput.current[index].click()
+                              shadowFileInput.current?.[index]?.click()
                             }
                             className="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                           >
@@ -1718,7 +1720,7 @@ export function EditForm(props: EditFormProps) {
                                 <button
                                   type="button"
                                   onClick={() =>
-                                    shadowFileInput.current[index].click()
+                                    shadowFileInput.current[index]?.click()
                                   }
                                   className="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                 >
