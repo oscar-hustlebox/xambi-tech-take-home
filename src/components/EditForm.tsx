@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { uploadFile } from "../services/firebase";
 import { StoredFile, StoredFileState } from "../data/common";
 import { useLoadingSpinner } from "./LoadingSpinner";
+import { FileUpload } from "./FileUpload";
 
 type UploadPhotoMap = {
   [key: string]: string;
