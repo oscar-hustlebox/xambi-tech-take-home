@@ -639,7 +639,7 @@ export function EditForm(props: EditFormProps) {
                       </div>
                     </div>
                   );
-                } else if (editEntry.type == EditEntryType.TextList) {
+                } else if (editEntry.type === EditEntryType.TextList) {
                   return (
                     <div className="col-span-6">
                       <div className="relative py-5">
