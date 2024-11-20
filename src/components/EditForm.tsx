@@ -84,27 +84,42 @@ function validateValue(
   value: unknown,
   attributeName: string,
   validationType: ValidationTypeValues
-) {
+): boolean {
+  const isString = (val: unknown): val is string =>
+    typeof val === "string" || val instanceof String;
+
   switch (validationType) {
     case ValidationType.Email:
-      if (value && (value.length > 100 || !/\S+@\S+\.\S+/.test(value))) {
+      if (!value) return true;
+      if (
+        !isString(value) ||
+        value.length > 100 ||
+        !/\S+@\S+\.\S+/.test(value)
+      ) {
         toast.error(`Error for "${attributeName}"\n\nEmail format is invalid.`);
         return false;
       }
       break;
+
     case ValidationType.PhoneNumber:
-      if (
-        value &&
-        (!value.match(/\d/g) || ![10, 11].includes(value.match(/\d/g).length))
-      ) {
+      if (!value) return true;
+      if (!isString(value)) {
         toast.error(
           `Error for "${attributeName}"\n\nPhone number format is invalid.`
         );
-        return;
+        return false;
+      }
+      const digits = value.match(/\d/g);
+      if (!digits || ![10, 11].includes(digits.length)) {
+        toast.error(
+          `Error for "${attributeName}"\n\nPhone number format is invalid.`
+        );
+        return false;
       }
       break;
+
     case ValidationType.UserName:
-      if (typeof value === "string" || value instanceof String) {
+      if (!isString(value)) {
         toast.error("Invalid User name");
         return false;
       }
@@ -113,6 +128,58 @@ function validateValue(
         return false;
       }
       break;
+
+    case ValidationType.Price:
+      if (!value) return true;
+      if (!isString(value)) {
+        toast.error(
+          attributeName + " is invalid. Please enter a valid number."
+        );
+        return false;
+      }
+      if (value.length > 100 || !/^\d*\.?\d*$/.test(value)) {
+        toast.error(
+          attributeName +
+            " is invalid. Please enter a valid number with only digits or a decimal."
+        );
+        return false;
+      }
+      const parts = value.split(".");
+      if (parts[1] && parts[1].length > 2) {
+        toast.error(
+          attributeName +
+            " is invalid. Please enter a valid number with only digits or a decimal."
+        );
+        return false;
+      }
+      const price = parseFloat(value);
+      if (isNaN(price) || price <= 0 || price > 9999.0) {
+        toast.error(
+          `Error for "${attributeName}"\n\nPlease enter a number between 0-9999`
+        );
+        return false;
+      }
+      break;
+
+    case ValidationType.Number:
+      if (!value) return true;
+      if (!isString(value)) {
+        toast.error(attributeName + " is invalid. Please enter a valid number");
+        return false;
+      }
+      if (value.length > 10 || !/^\d*\.?\d*$/.test(value)) {
+        toast.error(attributeName + " is invalid. Please enter a valid number");
+        return false;
+      }
+      const number = parseInt(value, 10);
+      if (isNaN(number) || number <= 0 || number > 999.0) {
+        toast.error(
+          `Error for "${attributeName}"\n\nPlease enter a number between 0-999`
+        );
+        return false;
+      }
+      break;
+
     case ValidationType.CheckboxChecked:
       if (!value) {
         toast.error(`Error for "${attributeName}"\n\nPlease check the box.`);
@@ -195,43 +262,6 @@ function validateValue(
       ) {
         toast.error(
           `Error for "${attributeName}"\n\nNeeds to be shorter than 400 characters`
-        );
-        return false;
-      }
-      break;
-    case ValidationType.Price:
-      if (value && (value.length > 100 || !/^\d*\.?\d*$/.test(value))) {
-        toast.error(
-          attributeName +
-            " is invalid. Please enter a valid number with only digits or a decimal."
-        );
-        return false;
-      }
-      if (value && value.split(".")[1] && value.split(".")[1].length > 2) {
-        toast.error(
-          attributeName +
-            " is invalid. Please enter a valid number with only digits or a decimal."
-        );
-        return false;
-      }
-      const price = parseFloat(value);
-      if (price <= 0 || price > 9999.0) {
-        toast.error(
-          `Error for "${attributeName}"\n\nPlease enter a number between 0-9999`
-        );
-        return false;
-      }
-
-      break;
-    case ValidationType.Number:
-      if (value && (value.length > 10 || !/^\d*\.?\d*$/.test(value))) {
-        toast.error(attributeName + " is invalid. Please enter a valid number");
-        return false;
-      }
-      const number = parseInt(value, 10);
-      if (number <= 0 || number > 999.0) {
-        toast.error(
-          `Error for "${attributeName}"\n\nPlease enter a number between 0-999`
         );
         return false;
       }
