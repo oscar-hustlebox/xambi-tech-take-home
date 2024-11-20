@@ -235,13 +235,14 @@ type EditFormProps = {
   buttonText?: string;
 };
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
 export function EditForm(props: EditFormProps) {
   const navigate = useNavigate();
-  const [loader, showLoader, hideLoader] = useLoadingSpinner();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [loader, _showLoader, _hideLoader] = useLoadingSpinner();
 
   const [entity, setEntity] = useState<EntityType>(props.entityObj);
   const [characterCounts, setCharacterCounts] = useState<
@@ -373,7 +374,7 @@ export function EditForm(props: EditFormProps) {
                 ) {
                   entity[entity_field][entity_sub_field] = target.value
                     .split("\n")
-                    .filter((e) => !!e);
+                    .filter((e: string) => !!e);
                 } else {
                   entity[entity_field][entity_sub_field] = target.value;
                 }
@@ -455,7 +456,7 @@ export function EditForm(props: EditFormProps) {
             if (max_idx_to_take > 0) {
               entity[editEntry.attribute] = Object.fromEntries(
                 Object.entries(entity[editEntry.attribute]).filter(
-                  ([k, v]) =>
+                  ([k, v]: [string, any]) =>
                     parseInt(k, 10) < max_idx_to_take && v["0"] && v["1"]
                 )
               );
@@ -479,12 +480,13 @@ export function EditForm(props: EditFormProps) {
             if (editEntry.type === EditEntryType.Showcase) {
               const showcase = entity[editEntry.attribute];
               const isInstagramShowcase =
-                editEntry.extraParam.isInstagramShowcase;
+                editEntry.extraParam?.isInstagramShowcase;
               const numRequiredFields = isInstagramShowcase ? 5 : 2; // All fields required
-              const maxPhotos = editEntry.extraParam.maxPhotos;
+              const maxPhotos = editEntry.extraParam?.maxPhotos;
 
               const numPhotos = showcase.image_urls.filter(
-                (image_url) => image_url.state !== StoredFileState.Deleted
+                (image_url: StoredFile) =>
+                  image_url.state !== StoredFileState.Deleted
               ).length;
               if (maxPhotos && numPhotos > maxPhotos) {
                 toast.error(
