@@ -272,7 +272,7 @@ export function EditForm(props: EditFormProps) {
   useEffect(() => {
     shadowFileInput.current = shadowFileInput.current.slice(
       0,
-      props.editEntries
+      props.editEntries.length
     );
   }, [props.editEntries]);
 
@@ -290,7 +290,7 @@ export function EditForm(props: EditFormProps) {
         : 0;
     });
     setListFieldSize(currListFieldSize);
-  }, [props.editEntries]);
+  }, [props.editEntries, props.entityObj]);
 
   const [radioFieldValue, setRadioFieldValue] = useState<string[]>([]);
   useEffect(() => {
@@ -300,12 +300,12 @@ export function EditForm(props: EditFormProps) {
       return isRadioField ? props.entityObj[entry.attribute] : "";
     });
     setRadioFieldValue(currRadioFieldValue);
-  }, [props.editEntries]);
+  }, [props.editEntries, props.entityObj]);
 
   const [checkboxFieldValue, setCheckboxFieldValue] = useState(false);
 
   return (
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative lg:pt-5 text-left">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative lg:pt-5 text-left">
       <form
         className="space-y-8 divide-y divide-gray-200"
         onSubmit={(event) => {
