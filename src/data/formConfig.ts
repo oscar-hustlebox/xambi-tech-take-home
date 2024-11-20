@@ -39,6 +39,12 @@ export const defaultEditEntries: EditEntry[] = [
     isRequired: false,
     options: ["Option 1", "Option 2", "Option 3"],
   },
+  {
+    attribute: "labels",
+    type: "PillList",
+    attributeName: "Pill List",
+    isRequired: false,
+  },
 
   // Media Uploads
   {

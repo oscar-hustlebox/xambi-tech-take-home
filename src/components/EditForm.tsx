@@ -5,6 +5,7 @@ import { uploadFile } from "../services/firebase";
 import { StoredFile, StoredFileState } from "../data/common";
 import { useLoadingSpinner } from "./LoadingSpinner";
 import { FileUpload } from "./FileUpload";
+import { PillList } from "./PillList";
 
 type UploadPhotoMap = {
   [key: string]: string;
@@ -59,6 +60,7 @@ export const EditEntryType = {
   Date: "Date",
   Select: "Select",
   Showcase: "Showcase",
+  PillList: "PillList",
 };
 
 export const ValidationType = {
@@ -1820,6 +1822,20 @@ export function EditForm(props: EditFormProps) {
                           isMultiple={true}
                         />
                       </div>
+                    );
+                  } else if (editEntry.type === EditEntryType.PillList) {
+                    return (
+                      <PillList
+                        label={editEntry.attributeName}
+                        required={editEntry.isRequired}
+                        value={entity[editEntry.attribute] || []}
+                        onChange={(newValues) => {
+                          setEntity({
+                            ...entity,
+                            [editEntry.attribute]: newValues,
+                          });
+                        }}
+                      />
                     );
                   }
                 }
