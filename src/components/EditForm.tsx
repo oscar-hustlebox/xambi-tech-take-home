@@ -14,6 +14,34 @@ type EntityType = {
   [key: string]: any;
 };
 
+type EditEntry = {
+  attribute: string;
+  attributeName: string;
+  type: keyof typeof EditEntryType;
+  isRequired: boolean;
+  validations?: ValidationTypeKeys[];
+  extraParam?: {
+    isInstagramShowcase?: boolean;
+    maxPhotos?: number;
+  };
+  options?: string[]; // Used for Radio type
+  subName?: string;
+  subTitle?: string;
+  info?: string;
+  condition?: boolean;
+  button?: React.ReactNode;
+  characterCount?: number;
+};
+
+type EditFormProps = {
+  title: string;
+  description: string;
+  editEntries: EditEntry[];
+  entityObj: EntityType;
+  onSubmitSuccess: (entity: EntityType) => void;
+  buttonText?: string;
+};
+
 export const EditEntryType = {
   Text: "Text",
   TextList: "TextList",
@@ -212,34 +240,6 @@ function validateValue(
   }
   return true;
 }
-
-type EditEntry = {
-  attribute: string;
-  attributeName: string;
-  type: keyof typeof EditEntryType;
-  isRequired: boolean;
-  validations?: ValidationTypeKeys[];
-  extraParam?: {
-    isInstagramShowcase?: boolean;
-    maxPhotos?: number;
-  };
-  options?: string[]; // Used for Radio type
-  subName?: string;
-  subTitle?: string;
-  info?: string;
-  condition?: boolean;
-  button?: React.ReactNode;
-  characterCount?: number;
-};
-
-type EditFormProps = {
-  title: string;
-  description: string;
-  editEntries: EditEntry[];
-  entityObj: EntityType;
-  onSubmitSuccess: (entity: EntityType) => void;
-  buttonText?: string;
-};
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -888,7 +888,7 @@ export function EditForm(props: EditFormProps) {
                         </label>
                         <fieldset className="mt-4">
                           <div className="space-y-4">
-                            {editEntry.options.map((option) => (
+                            {editEntry.options?.map((option) => (
                               <div className="flex items-center">
                                 <input
                                   name={editEntry.attribute}
